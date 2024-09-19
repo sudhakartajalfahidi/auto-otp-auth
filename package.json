@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "test": "mocha"
-},
-
+    "test": "mocha"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,9 +20,11 @@
     "speakeasy": "^2.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/register": "^7.24.6",
     "chai": "^5.1.1",
     "chai-http": "^5.0.0",
     "mocha": "^10.7.3"
   }
-  
 }
