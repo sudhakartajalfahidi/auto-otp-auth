@@ -1,21 +1,29 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import { json } from 'express';
 
 const app = express();
-app.use(express.json());
+const port = 3000;
+
 app.use(cors());
+app.use(json());
 
-// Routes
-const authRoutes = require('./src/routes/authRoutes');
-const otpRoutes = require('./src/routes/otpRoutes');
+app.post('/receive-otp', (req, res) => {
+  const { otpData } = req.body;
 
-// Use routes
-app.use('/api/auth', authRoutes);
-app.use('/api/otp', otpRoutes);
+  if (!otpData || !Array.isArray(otpData) || otpData.length === 0) {
+    return res.status(400).json({ message: 'Invalid or missing OTP data' });
+  }
 
-// Start the server
-const PORT = process.env.PORT || 6000;
-app.listen(PORT, () => {
-  console.log(`Bank OTP Sync server running on port ${PORT}`);
+  console.log('Received OTP Data:', otpData);
+  otpData.forEach(otpEntry => {
+    const { otp, address } = otpEntry;
+    console.log(`OTP: ${otp} from: ${address}`);
+  });
+
+  res.status(200).json({ message: 'OTPs received and processed successfully' });
 });
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+}); 
